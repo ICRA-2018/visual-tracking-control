@@ -1,0 +1,7 @@
+name: visual_tracking_control
+
+base:
+  ubuntu: 16.04
+  opengl: runtime
+  icub: binary
+
