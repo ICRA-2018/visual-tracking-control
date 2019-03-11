@@ -2,6 +2,38 @@ name: visual_tracking_control
 
 base:
   ubuntu: 16.04
+  cuda: 8.0-devel
   opengl: runtime
   icub: binary
 
+apt:
+  - wget
+
+source:
+  - name: icub-contrib-common
+    repo: https://github.com/robotology/icub-contrib-common.git
+    build: cmake
+    cmake_options: -DYARP_DIR=/usr/lib/x86_64-linux-gnu/cmake/YARP -DCMAKE_INSTALL_PREFIX:PATH=/usr
+
+  - name: opencv
+    zip: https://github.com/opencv/opencv/archive/3.3.0.zip
+    build: cmake
+
+  - name: bayes-filters-lib
+    repo: https://github.com/robotology/bayes-filters-lib.git
+    build: cmake
+    depends:
+      - libeigen3-dev
+
+  - name: superimpose-mesh-lib
+    repo: https://github.com/robotology/superimpose-mesh-lib.git
+    build: cmake
+    depends:
+      - libassimp-dev
+      - libglew-dev
+      - libglfw3-dev
+      - libglm-dev
+
+build: cmake
+
+cmake_options: -DBUILD_HAND_TRACKING=ON -DBUILD_VISUAL_SERVOING_CLIENT=ON -DBUILD_VISUAL_SERVOING_SERVER=ON
